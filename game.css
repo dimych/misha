@@ -1,0 +1,94 @@
+/* базовая сетка/оформление */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji";
+    background: #0b0f14;
+    color: #e9eef5;
+}
+
+.app { max-width: 880px; margin: 0 auto; padding: 12px; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.topbar h1 { font-size: 20px; margin: 8px 0; }
+.hud { display: flex; gap: 12px; align-items: center; }
+.stat { background: #141b22; border: 1px solid #1f2937; border-radius: 12px; padding: 6px 10px; }
+
+.game { margin-top: 12px; display: grid; gap: 12px; }
+
+/* Доjo-пэды */
+.dojo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.pad {
+    position: relative; height: 94px; border-radius: 16px;
+    border: 2px dashed rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.04);
+    display: grid; place-items: center; isolation: isolate;
+}
+.pad span { font-weight: 700; text-shadow: 0 1px 0 #000; }
+.pad::after { content: ""; position: absolute; inset: 0; border-radius: inherit; mix-blend-mode: screen; opacity: .6; pointer-events: none; }
+.pad[data-hot="true"] { outline: 3px solid #ffd166; outline-offset: -3px; }
+
+.pad-red::after   { background: radial-gradient(60% 60% at 50% 50%, rgba(255,56,56,.5),   transparent 70%); }
+.pad-blue::after  { background: radial-gradient(60% 60% at 50% 50%, rgba(56,168,255,.5),  transparent 70%); }
+.pad-green::after { background: radial-gradient(60% 60% at 50% 50%, rgba(46,204,113,.5), transparent 70%); }
+.pad-black::after { background: radial-gradient(60% 60% at 50% 50%, rgba(20,20,20,.8),   transparent 70%); }
+.pad-white::after { background: radial-gradient(60% 60% at 50% 50%, rgba(255,255,255,.6),transparent 70%); }
+.pad-teal::after  { background: radial-gradient(60% 60% at 50% 50%, rgba(0,150,136,.6),  transparent 70%); }
+
+/* Зона спавна */
+.spawn { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; }
+
+/* Сюрикен — позиционируется через transform: translate(...) */
+.shuriken {
+    width: 88px; height: 88px; border-radius: 50%; position: relative;
+    touch-action: none;           /* критично: не скроллим во время dnd */
+    user-select: none; outline: none; cursor: grab;
+    transform: translate(0px, 0px); /* исходная точка */
+}
+.shuriken:active { cursor: grabbing; }
+
+/* Визуал сюрикена (без SVG, на CSS) */
+.shuriken::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(closest-side, rgba(255,255,255,.15), rgba(0,0,0,.4));
+    border-radius: 50%; box-shadow: 0 8px 24px rgba(0,0,0,.5);
+}
+.shuriken::after {
+    content: ""; position: absolute; inset: 6px;
+    background: conic-gradient(from 45deg, currentColor 0 25%, transparent 25% 50%, currentColor 50% 75%, transparent 75% 100%);
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,.6)); border-radius: 50%;
+}
+
+/* Цветовые темы сюрикена */
+.s-red   { color: #ff3838; }
+.s-blue  { color: #38a8ff; }
+.s-green { color: #2ecc71; }
+.s-black { color: #111; }
+.s-white { color: #fafafa; }
+.s-teal  { color: #009688; }
+
+.btn { padding: 10px 14px; border-radius: 12px; border: 1px solid #2b3642; background: #1a2430; color: #e9eef5; font-weight: 600; }
+.btn:active { transform: translateY(1px); }
+.btn.ghost { background: transparent; display: none; }
+
+.footer { opacity: .8; font-size: 13px; margin-top: 8px; }
+
+/* Модалки */
+::backdrop { background: rgba(0,0,0,.6); backdrop-filter: blur(2px); }
+.modal { border: 0; padding: 0; background: transparent; }
+.card  { background: #0f151c; border: 1px solid #2b3642; border-radius: 16px; padding: 16px; min-width: 280px; max-width: 420px; }
+.card h2 { margin-top: 0; }
+.card menu { display: flex; justify-content: flex-end; gap: 8px; margin: 0; margin-top: 10px; padding: 0; }
+
+/* Контрастный текст в модалке */
+.modal, .modal * { color: #e9eef5 !important; }
+
+.keys-reveal { margin-top: 12px; display: grid; gap: 8px; }
+.key { display: flex; gap: 8px; align-items: center; padding: 8px 10px; border-radius: 12px; border: 1px dashed #3b4756; background: #121a22; }
+.key .emoji { font-size: 24px; }
+.key .letter { font-weight: 800; font-size: 18px; }
+
+@media (max-width: 480px) {
+    .pad { height: 80px; }
+    .shuriken { width: 76px; height: 76px; }
+}
