@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover" />
+    <title>Ninjago: Shuriken Shuffle</title>
+    <link rel="stylesheet" href="game.css" />
+</head>
+<body>
+<div class="app">
+    <header class="topbar">
+        <h1>🌀 Ninjago: Shuriken Shuffle</h1>
+        <div class="hud">
+            <div class="stat">⏱️ <span id="time">60</span>s</div>
+            <div class="stat">⭐ Счёт: <span id="score">0</span>/<span id="target">10</span></div>
+        </div>
+    </header>
+
+    <main class="game">
+        <div class="dojo">
+            <div class="pad pad-red"   data-color="red"   aria-label="Kai (красный)"><span>Kai</span></div>
+            <div class="pad pad-blue"  data-color="blue"  aria-label="Jay (синий)"><span>Jay</span></div>
+            <div class="pad pad-green" data-color="green" aria-label="Lloyd (зелёный)"><span>Lloyd</span></div>
+            <div class="pad pad-black" data-color="black" aria-label="Cole (чёрный)"><span>Cole</span></div>
+            <div class="pad pad-white" data-color="white" aria-label="Zane (белый)"><span>Zane</span></div>
+            <div class="pad pad-teal"  data-color="teal"  aria-label="Nya (бирюзовый)"><span>Nya</span></div>
+        </div>
+
+        <div class="spawn">
+            <div id="shuriken" class="shuriken" role="img" aria-label="shuriken" tabindex="0"></div>
+            <button id="skip" class="btn ghost" aria-label="Пропустить этот сюрикен">Пропустить</button>
+        </div>
+    </main>
+
+    <footer class="footer">
+        Подсказка: перетаскивай сюрикен пальцем к нужному ниндзя или нажми «Пропустить».
+    </footer>
+</div>
+
+<!-- Победа -->
+<dialog id="modal-win" class="modal">
+    <form method="dialog" class="card">
+        <h2>🎉 Победа ниндзя!</h2>
+        <p>Ты настоящий инженер🦾-ниндзя 🥷
+            Ты справился за <b><span data-bind="final-time"></span>с</b> с результатом <b><span data-bind="final-score"></span></b>.</p>
+        <div class="keys-reveal" id="keys-reveal"></div>
+        <menu>
+            <button class="btn" value="restart">Играть ещё</button>
+        </menu>
+    </form>
+</dialog>
+
+<!-- Проигрыш -->
+<dialog id="modal-lose" class="modal">
+    <form method="dialog" class="card">
+        <h2>⏳ Время вышло, сынок 💩</h2>
+        <p>Попробуй ещё раз, у тебя получится! Люблю тебя 🫶</p>
+        <menu>
+            <button class="btn" value="restart">Сыграть снова</button>
+        </menu>
+    </form>
+</dialog>
+
+<!-- ВАЖНО: ключи подключаем перед логикой игры -->
+<script src="keys.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
