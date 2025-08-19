@@ -1,0 +1,94 @@
+/* База */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji";
+    background: #0b0f14;
+    color: #e9eef5;
+}
+
+.app { max-width: 1100px; margin: 0 auto; padding: 12px; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.topbar h1 { font-size: 20px; margin: 8px 0; }
+.hud { display: flex; gap: 12px; align-items: center; }
+.stat { background: #141b22; border: 1px solid #1f2937; border-radius: 12px; padding: 6px 10px; }
+
+.board-wrap { margin-top: 14px; }
+.board {
+    display: grid;
+    gap: 8px;
+    /* Кол-во колонок зададим из JS через --cols */
+    grid-template-columns: repeat(var(--cols, 8), 1fr);
+}
+
+/* Карточка */
+.card-tile {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;        /* квадрат */
+    perspective: 800px;
+    border-radius: 14px;
+    overflow: hidden;
+}
+.card-inner {
+    position: absolute; inset: 0;
+    transform-style: preserve-3d;
+    transition: transform .28s ease;
+    border-radius: 14px;
+}
+.card-tile.is-open .card-inner,
+.card-tile.is-matched .card-inner {
+    transform: rotateY(180deg);
+}
+.face {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    display: grid; place-items: center;
+    border-radius: 14px;
+}
+
+/* Тыльная сторона */
+.face.back {
+    background: linear-gradient(145deg, #131b24, #0d131a);
+    border: 2px solid #1f2a36;
+    font-size: 28px;
+}
+
+/* Лицевая сторона */
+.face.front {
+    transform: rotateY(180deg);
+    background: #0f151c;
+    border: 2px solid #2b3642;
+}
+.face.front img {
+    width: 100%; height: 100%;
+    object-fit: cover;         /* любые картинки станут аккуратным квадратом */
+    object-position: center;
+    border-radius: 12px;
+}
+
+/* Модалка победы + ключи */
+::backdrop { background: rgba(0,0,0,.6); backdrop-filter: blur(2px); }
+.modal { border: 0; padding: 0; background: transparent; }
+.modal .card {
+    background: #0f151c; border: 1px solid #2b3642; border-radius: 16px; padding: 16px;
+    min-width: 280px; max-width: 420px;
+}
+.modal, .modal * { color: #e9eef5 !important; }
+.modal menu { display: flex; justify-content: flex-end; gap: 8px; margin: 0; padding: 0; }
+.btn { padding: 10px 14px; border-radius: 12px; border: 1px solid #2b3642; background: #1a2430; color: #e9eef5; font-weight: 600; }
+.btn:active { transform: translateY(1px); }
+
+.keys-reveal { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.keys-reveal .key {
+    display: grid; grid-template-columns: 40px auto; gap: 8px; align-items: center;
+    padding: 8px 10px; border-radius: 12px; border: 1px dashed #3b4756; background: #121a22;
+}
+.keys-reveal .emoji { font-size: 28px; text-align: center; }
+.keys-reveal .letter { font-weight: 800; font-size: 20px; }
+
+/* Мобильная сетка */
+@media (max-width: 720px) {
+    .board { grid-template-columns: repeat(var(--cols, 8), minmax(60px, 1fr)); }
+}
