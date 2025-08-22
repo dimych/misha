@@ -50,7 +50,7 @@
 
     function showCurrent() {
         const c = characters[idx];
-        imgEl.src = c.src;
+        imgEl.src = c.src + '?sd=2424';
         imgEl.alt = c.name;
         progressEl.textContent = String(idx);
         //promptEl.textContent = 'Нажми на микрофон и скажи: ' + c.name;
