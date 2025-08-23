@@ -2,7 +2,7 @@
 window.NINJAGO_CHARACTERS = [
     { id: 1,  name: "Джей",       aliases: ["джей", "джэй", "jay", "джэй", "j"],src: "images/1.png"  },
     { id: 2,  name: "Жопа",        aliases: ["жопа"],                 src: "images/2.png"  },
-    { id: 3,  name: "Коул",       aliases: ["коул", "cole"],               src: "images/3.png"  },
+    { id: 3,  name: "Инженер",       aliases: ["инженер", "инженер"],               src: "images/3.png"  },
     { id: 4,  name: "Зейн",       aliases: ["зейн", "zane"],               src: "images/4.png"  },
     { id: 5,  name: "Ллойд",      aliases: ["ллойд", "лойд", "lloyd"],     src: "images/5.png"  },
     { id: 6,  name: "Ния",        aliases: ["ния", "ниа", "nya"],          src: "images/6.png"  },
