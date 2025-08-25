@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover" />
+    <title>Бегущий ниндзя</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="app">
+    <header class="topbar">
+        <h1>🥷 Бегущий ниндзя</h1>
+        <div class="hud">
+            <div class="stat">Враги: <span id="kills">0</span>/<span id="target">8</span></div>
+            <div class="stat">Дистанция: <span id="dist">0</span>м</div>
+        </div>
+    </header>
+
+    <main class="stage">
+        <div id="game" class="game" aria-label="Игровая сцена">
+            <div id="ground" class="ground"></div>
+            <img id="player" class="player" src="images/ninja.png" alt="Ниндзя" />
+            <!-- враги и препятствия будут добавляться сюда -->
+        </div>
+        <div class="controls">
+            <button id="btnJump" class="btn ctl">⤴️ Прыжок</button>
+            <button id="btnAttack" class="btn ctl">⚔️ Удар</button>
+        </div>
+    </main>
+</div>
+
+<!-- Победа -->
+<dialog id="modal-win" class="modal">
+    <form method="dialog" class="card">
+        <h2>🎉 Победа ниндзя!</h2>
+        <p>Ты победил всех врагов и добежал до финиша!</p>
+        <div id="keys-reveal" class="keys-reveal"></div>
+        <menu>
+            <button class="btn" value="restart">Играть ещё</button>
+        </menu>
+    </form>
+</dialog>
+
+<!-- Проигрыш -->
+<dialog id="modal-lose" class="modal">
+    <form method="dialog" class="card">
+        <h2>💩 Ой!</h2>
+        <p id="lose-text">Ниндзя столкнулся с препятствием. Попробуй ещё!</p>
+        <menu>
+            <button class="btn" value="restart">Сыграть снова</button>
+        </menu>
+    </form>
+</dialog>
+
+<!-- Порядок: конфиг → ключи → логика -->
+<script src="config.js"></script>
+<script src="keys.js"></script>
+<script src="game.js"></script>
+</body>
+</html>

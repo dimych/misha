@@ -1,0 +1,54 @@
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji";
+    background: #0b0f14; color: #e9eef5;
+}
+.app { max-width: 960px; margin: 0 auto; padding: 12px; }
+.topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.stat { background: #141b22; border: 1px solid #1f2937; border-radius: 12px; padding: 6px 10px; }
+
+.stage { display: grid; gap: 10px; }
+.game {
+    position: relative; width: 100%; height: min(380px, 70vh);
+    background: linear-gradient(180deg, #0b1320 0%, #0b1320 60%, #0f151c 60%, #0f151c 100%);
+    border: 1px solid #2b3642; border-radius: 16px; overflow: hidden;
+}
+.ground {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 28%;
+    background-image: repeating-linear-gradient(90deg, rgba(255,255,255,.06) 0 12px, transparent 12px 24px);
+    border-top: 1px solid #2b3642;
+}
+.player, .enemy, .obstacle {
+    position: absolute; bottom: 28%; width: 72px; height: 72px;
+    object-fit: cover; object-position: center; border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.35);
+}
+.enemy, .obstacle { will-change: transform; }
+.player { left: 28px; z-index: 5; }
+
+.controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.btn {
+    padding: 12px 14px; border-radius: 12px; border: 1px solid #2b3642;
+    background: #1a2430; color: #e9eef5; font-weight: 700; font-size: 16px;
+}
+.btn:active { transform: translateY(1px); }
+
+::backdrop { background: rgba(0,0,0,.6); backdrop-filter: blur(2px); }
+.modal { border: 0; padding: 0; background: transparent; }
+.card  { background: #0f151c; border: 1px solid #2b3642; border-radius: 16px; padding: 16px; min-width: 280px; max-width: 420px; }
+.modal, .modal * { color: #e9eef5 !important; }
+.card menu { display: flex; justify-content: flex-end; gap: 8px; margin: 0; padding: 0; }
+.keys-reveal { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.keys-reveal .key {
+    display: grid; grid-template-columns: 40px auto; gap: 8px; align-items: center;
+    padding: 8px 10px; border-radius: 12px; border: 1px dashed #3b4756; background: #121a22;
+}
+.keys-reveal .emoji { font-size: 28px; text-align: center; }
+.keys-reveal .letter { font-weight: 800; font-size: 20px; }
+
+/* мобильные правки */
+@media (max-width: 560px) {
+    .player, .enemy, .obstacle { width: 64px; height: 64px; }
+}
