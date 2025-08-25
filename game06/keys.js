@@ -3,10 +3,10 @@ window.NINJAGO_REVEAL_COUNT = 6;
 
 // Ключи (эмодзи → буква). Замени на свои.
 window.NINJAGO_KEYS = [
-    { emoji: "🐉", letter: "Ж" },
-    { emoji: "🥷", letter: "Н" },
-    { emoji: "⚔️", letter: "И" },
-    { emoji: "🌀", letter: "Д" },
-    { emoji: "🏯", letter: "З" },
-    { emoji: "🔥", letter: "Я" }
+    { emoji: "🦁", letter: "И" },
+    { emoji: "🐵", letter: "М" },
+    { emoji: "️🐒", letter: "Р" },
+    { emoji: "🐍", letter: "С" },
+    { emoji: "🐹", letter: "Х" },
+    { emoji: "🦀", letter: "Э" }
 ];
