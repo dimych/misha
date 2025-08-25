@@ -25,6 +25,9 @@ body {
     object-fit: cover; object-position: center; border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0,0,0,.35);
 }
+.player {
+    height: 160px !important;
+}
 .enemy, .obstacle { will-change: transform; }
 .player { left: 28px; z-index: 5; }
 

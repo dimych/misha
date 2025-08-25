@@ -1,13 +1,16 @@
 (function () {
     const cfg = window.NINJA_RUNNER_CONFIG || {};
-    const TARGET_KILLS = cfg.TARGET_KILLS ?? 8;
-    const SPEED        = cfg.SPEED_PX_S ?? 240;
-    const GRAVITY      = cfg.GRAVITY ?? 1400;
-    const JUMP_V0      = cfg.JUMP_VELOCITY ?? 520;
-    const ERANGE       = cfg.ATTACK_RANGE_PX ?? 80;
-    const MAX_DIST_M   = cfg.MAX_DISTANCE_M ?? 400;
-    const ENEMY_SPAWN  = cfg.ENEMY_SPAWN_MS || [900,1400];
-    const OBST_SPAWN   = cfg.OBST_SPAWN_MS  || [1000,1600];
+    const TARGET_KILLS = cfg.TARGET_KILLS ?? 6;
+    const SPEED        = cfg.SPEED_PX_S ?? 190;
+    const GRAVITY      = cfg.GRAVITY ?? 1500;
+    const JUMP_V0      = cfg.JUMP_VELOCITY ?? 560;
+    const ERANGE       = cfg.ATTACK_RANGE_PX ?? 110;
+    const MAX_DIST_M   = cfg.MAX_DISTANCE_M ?? 300;
+
+    const SPAWN_GAP    = cfg.SPAWN_GAP_MS || [800,1200];
+    const ENEMY_P      = cfg.ENEMY_PROBABILITY ?? 0.6;
+    const MAX_ENEMIES  = cfg.MAX_ACTIVE_ENEMIES ?? 2;
+    const MAX_OBST     = cfg.MAX_ACTIVE_OBSTACLES ?? 1;
 
     // UI
     const gameEl = document.getElementById('game');
@@ -44,7 +47,7 @@
 
     const enemies = new Set();
     const obstacles = new Set();
-    let enemyTimer = 0, obstTimer = 0;
+    let gateTimer = 0;
 
     // helpers
     const rnd = (a,b)=> Math.floor(Math.random()*(b-a+1))+a;
@@ -58,8 +61,10 @@
         return i;
     };
     const rect = (el)=> el.getBoundingClientRect();
+    const shrink = (r, pad=6) => ({left:r.left+pad, right:r.right-pad, top:r.top+pad, bottom:r.bottom-pad});
     const collide = (a,b)=>{
-        const r1 = rect(a), r2 = rect(b);
+        const r1 = shrink(a.getBoundingClientRect());
+        const r2 = shrink(b.getBoundingClientRect());
         return !(r2.left > r1.right || r2.right < r1.left || r2.top > r1.bottom || r2.bottom < r1.top);
     };
 
@@ -109,7 +114,7 @@
         enemies.forEach(e=>e.remove()); enemies.clear();
         obstacles.forEach(o=>o.remove()); obstacles.clear();
         playerEl.style.left = '28px'; playerEl.style.bottom = '28%';
-        enemyTimer = rnd(...ENEMY_SPAWN); obstTimer = rnd(...OBST_SPAWN);
+        gateTimer = rnd(...SPAWN_GAP);
     }
 
     function start(){
@@ -156,29 +161,45 @@
         }
 
         // spawn timers
-        enemyTimer -= dt; obstTimer -= dt;
-        if (enemyTimer <= 0) { spawnEnemy(); enemyTimer = rnd(...ENEMY_SPAWN); }
-        if (obstTimer <= 0)  { spawnObstacle(); obstTimer = rnd(...OBST_SPAWN); }
-
+        gateTimer -= dt;
+        if (gateTimer <= 0) {
+            spawnOne();
+            gateTimer = rnd(...SPAWN_GAP);
+        }
         // условие победы: и враги добиты, и дистанция пройдена
         if (kills >= TARGET_KILLS && dist >= MAX_DIST_M) return win();
 
         raf = requestAnimationFrame(loop);
     }
 
+    function spawnOne() {
+        // ограничим кол-во активных сущностей
+        if (enemies.size >= MAX_ENEMIES && obstacles.size >= MAX_OBST) return;
+
+        // выбираем тип: враг или препятствие, но с учётом лимитов
+        let wantEnemy = Math.random() < ENEMY_P;
+        if (enemies.size >= MAX_ENEMIES) wantEnemy = false;
+        if (obstacles.size >= MAX_OBST)  wantEnemy = true;
+
+        if (wantEnemy) spawnEnemy(); else spawnObstacle();
+    }
+
+
     function spawnEnemy(){
         const src = ENEMY_SOURCES[rnd(0, ENEMY_SOURCES.length-1)];
         const e = $img('enemy', src);
-        // иногда ставим врага чуть выше — «летающий» (чтобы нужен был прыжок + удар)
-        if (Math.random()<0.35) e.style.bottom = 'calc(28% + 40px)';
+        // 30% «воздушных», но только если НЕТ препятствия (чтобы не было «двойной ловушки»)
+        if (Math.random()<0.30 && obstacles.size === 0) e.style.bottom = 'calc(28% + 40px)';
         gameEl.appendChild(e);
         enemies.add(e);
     }
 
     function spawnObstacle(){
+        // спавним препятствие ТОЛЬКО если врагов меньше 2 (не наслаиваем)
+        if (enemies.size >= MAX_ENEMIES) return;
         const src = OBST_SOURCES[rnd(0, OBST_SOURCES.length-1)];
         const o = $img('obstacle', src);
-        o.style.bottom = '28%'; // наземное препятствие
+        o.style.bottom = '28%';
         gameEl.appendChild(o);
         obstacles.add(o);
     }
