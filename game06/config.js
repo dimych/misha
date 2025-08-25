@@ -5,7 +5,7 @@ window.NINJA_RUNNER_CONFIG = {
     GRAVITY: 1500,            // физика чуть плотнее
     JUMP_VELOCITY: 800,       // выше прыжок
     ATTACK_RANGE_PX: 110,     // удар «дальше»
-    MAX_DISTANCE_M: 300,      // короче дистанция
+    MAX_DISTANCE_M: 100,      // короче дистанция
 
     // Спавним ОДИН объект за раз, с паузой:
     SPAWN_GAP_MS: [800, 1200], // пауза между объектами
