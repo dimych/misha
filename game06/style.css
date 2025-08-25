@@ -55,3 +55,7 @@ body {
 @media (max-width: 560px) {
     .player, .enemy, .obstacle { width: 64px; height: 64px; }
 }
+
+button, a, input, textarea {
+    touch-action: manipulation; /* уменьшает шанс дабл-тап зума */
+}
